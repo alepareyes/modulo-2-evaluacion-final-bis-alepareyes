@@ -7,6 +7,10 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 50px;
+
+    &__logo {
+
+    }
 }
 
 .cards-container {
@@ -16,10 +20,15 @@
     align-items: center;
 }
 
-// .hidden {
-//     display: none;
-// }
+.hidden {
+    display: none;
+}
 
+.flip {
+    color: white;
+    font-size: 15px;
+    font-style: oblique;
+}
 
 .card {
     display: flex;
@@ -32,6 +41,11 @@
     height: 300px;
     margin: 15px;
 }
+
+.flipped {
+    background: rgb(236, 189, 250);
+}
+
 
 .img {
     width: 100%;
