@@ -14,7 +14,7 @@ const url = 'https://beta.adalab.es/ejercicios-extra/api/pokemon-cards/'
 
 
 
-//////////////////////////////////////  INPUT POR DEFECTO
+//////////////////////INPUT POR DEFECTO////////////////  
 function setDefaultInput() {
     const currentInput = document.querySelector('.input4');
     currentInput.checked = true;
@@ -23,7 +23,7 @@ function setDefaultInput() {
 
 
 
-/////////////////////////////////////   PINTAR CARTAS SOLICITADAS
+///////////////////////PINTAR CARTAS SOLICITADAS//////////////   
 function getServerCards() {
 
     cardsContainer.innerHTML = "";
@@ -42,7 +42,7 @@ function getServerCards() {
 
 
 
-////////////////////////////////////////   CREACIÓN DE LA CARTA (contenedores y clases)
+/////////////////CREACIÓN DE LA CARTA (contenedores y clases)/////////////
 function createCard(cards) {
     for (const card of cards) {
 
@@ -64,6 +64,12 @@ function createCard(cards) {
         carta.appendChild(img);
         cardsContainer.appendChild(carta);
         carta.appendChild(imgFlip);
+
+        const cartukis = document.querySelectorAll('.card');
+
+        for (const card of cartukis) {
+            card.addEventListener('click', flipCard);
+        }
     }
 }
 
@@ -73,25 +79,24 @@ function stopBotton(ev) {
 }
 
 
-// function flipCard() {
-//     carta.classList.add('.hidden');
+function flipCard() {
 
-// }
+    const backCard = document.querySelector('.card');
+    const backCardText = document.querySelector('.flip');
+    const img = document.querySelector('img');
 
+    backCardText.classList.add('hidden');
+    backCard.classList.add('flipped');
+    img.classList.remove('hidden');
 
-// function listenCards() {
+}
 
-//     const itemCards = document.querySelectorAll('.js-card');
-
-//     for (const item of itemCards) {
-//         item.addEventListener('click', flipCard);
-//     }
-// };
 
 
 
 
 startButton.addEventListener('click', getServerCards);
 startButton.addEventListener('click', stopBotton);
+
 
 setDefaultInput();
