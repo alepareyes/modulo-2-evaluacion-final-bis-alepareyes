@@ -41,22 +41,23 @@ function getServerCards() {
 };
 
 
-
 /////////////////CREACIÓN DE LA CARTA (contenedores y clases)/////////////
 function createCard(cards) {
+
+
     for (const card of cards) {
 
         const carta = document.createElement('div');
-        carta.setAttribute('class', '.js-card card');
+        carta.setAttribute('class', 'js-card card');
 
 
         const img = document.createElement('img');
         img.setAttribute('src', card.image);
-        img.setAttribute('class', '.js-img img hidden');
+        img.setAttribute('class', 'js-img img');
 
 
         const imgFlip = document.createElement('p');
-        imgFlip.setAttribute('class', '.js-flip flip')
+        imgFlip.setAttribute('class', 'js-flip flip')
         const alepa = document.createTextNode("Who's That Pokémon?");
         imgFlip.appendChild(alepa);
 
@@ -65,12 +66,13 @@ function createCard(cards) {
         cardsContainer.appendChild(carta);
         carta.appendChild(imgFlip);
 
-        const cartukis = document.querySelectorAll('.card');
-
-        for (const card of cartukis) {
-            card.addEventListener('click', flipCard);
-        }
     }
+
+    listenCards(cards);
+
+
+    console.log('están saliendo ' + cards.length + ' cartas');
+    console.log(cards);
 }
 
 
@@ -79,24 +81,37 @@ function stopBotton(ev) {
 }
 
 
-function flipCard() {
 
-    const backCard = document.querySelector('.card');
-    const backCardText = document.querySelector('.flip');
-    const img = document.querySelector('img');
+function listenCards() {
+    const totalCards = document.querySelectorAll('.js-card');
 
-    backCardText.classList.add('hidden');
-    backCard.classList.add('flipped');
-    img.classList.remove('hidden');
-
+    for (const card of totalCards) {
+        card.addEventListener('click', flipCard);
+    }
+    console.log(totalCards);
 }
 
 
+function flipCard(ev) {
+    debugger;
+
+    const backCard = document.querySelector('.js-card');
+    // const backCardText = document.querySelector('.js-flip');
+    // const img = document.querySelector('.js-img');
 
 
+    // backCardText.classList.add('hidden');
+    ev.currentTarget.classList.add('card2');
+    ev.currentTarget.classList.remove('card');
+
+    console.log("hola" + ev.currentTarget);
+
+
+}
 
 startButton.addEventListener('click', getServerCards);
 startButton.addEventListener('click', stopBotton);
 
 
 setDefaultInput();
+

@@ -20,15 +20,8 @@
     align-items: center;
 }
 
-.hidden {
-    display: none;
-}
 
-.flip {
-    color: white;
-    font-size: 15px;
-    font-style: oblique;
-}
+
 
 .card {
     display: flex;
@@ -40,14 +33,38 @@
     width: 200px;
     height: 300px;
     margin: 15px;
+
+    .flip {
+    color: white;
+    font-size: 15px;
+    font-style: oblique;
+    }
+
+    .img {
+        display: none;
+    }
 }
 
-.flipped {
+
+
+
+.card2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: black solid;
+    border-radius: 2%;
+    width: 200px;
+    height: 300px;
+    margin: 15px;
     background: rgb(236, 189, 250);
-}
 
+    .flip {
+        display: none;
+    }
 
-.img {
-    width: 100%;
-    height: 80%;
+    .img {
+        width: 100%;
+        height: 80%;
+    }
 }
