@@ -38,6 +38,7 @@ function getServerCards() {
                 .then(data => createCard(data))
         }
     }
+
 };
 
 
@@ -93,19 +94,9 @@ function listenCards() {
 
 
 function flipCard(ev) {
-    debugger;
 
-    const backCard = document.querySelector('.js-card');
-    // const backCardText = document.querySelector('.js-flip');
-    // const img = document.querySelector('.js-img');
-
-
-    // backCardText.classList.add('hidden');
-    ev.currentTarget.classList.add('card2');
+    ev.currentTarget.classList.add('clickedCard');
     ev.currentTarget.classList.remove('card');
-
-    console.log("hola" + ev.currentTarget);
-
 
 }
 
