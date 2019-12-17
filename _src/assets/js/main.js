@@ -3,14 +3,14 @@
 
 const inputs = document.querySelectorAll('.js-input');
 
-// const option4 = document.querySelector('.js-input4');
-// const option6 = document.querySelector('.js-input6');
-// const option8 = document.querySelector('.js-input8');
-
 const cardsContainer = document.querySelector('.js-cards-container');
 const startButton = document.querySelector('.js-btn');
 
 const url = 'https://beta.adalab.es/ejercicios-extra/api/pokemon-cards/'
+
+let inputValue = "";
+let info = "";
+
 
 
 ////////////////////INPUT POR DEFECTO////////////////  
@@ -18,19 +18,17 @@ function setDefaultInput() {
 
     const currentInput = document.querySelector('.input4');
     currentInput.checked = true;
-    currentInput.click(); // FALSO CLICK.
+
 }
 
 
 
-let inputValue = "";
 
+///////////////COGER INPUT VALUE DEL LS////////////////////
 function getLocalStorage() {
 
     const localStorageInput = localStorage.getItem('Difficulty');
 
-    console.log(localStorageInput);
-    console.log(inputValue);
     if (localStorageInput !== null) {
         inputValue = localStorageInput
 
@@ -42,8 +40,10 @@ function getLocalStorage() {
         }
 
     } else {
+
         setDefaultInput();
     }
+
     getServerCards();
 
 }
@@ -52,14 +52,14 @@ getLocalStorage();
 
 
 
-///////////////////////PINTAR CARTAS SOLICITADAS//////////////   
+///////////////////PINTAR CARTAS SOLICITADAS//////////////   
 function getServerCards() {
 
-    cardsContainer.innerHTML = "";
+    cardsContainer.innerHTML = ""; //No se acumulan las búsquedas
 
     for (const input of inputs) {
         inputValue = input.value;
-        const clickedInput = input.checked;
+        const clickedInput = input.checked; //TRUE O FALSE
 
         if (clickedInput === true) {
 
@@ -68,14 +68,16 @@ function getServerCards() {
             fetch(`${url}${inputValue}.json`)
                 .then(response => response.json())
                 .then(data => {
-
-                    createCard(data)
+                    info = data;
+                    createCard(data);
                 })
         }
     }
 
 
 };
+
+
 
 
 /////////////////CREACIÓN DE LA CARTA (contenedores y clases)/////////////
@@ -92,11 +94,6 @@ function createCard(cards) {
         img.setAttribute('src', card.image);
         img.setAttribute('class', 'js-img img');
 
-        // const namePokemon = document.createElement('p');
-        // const name = document.createTextNode(card.name);
-        // namePokemon.appendChild(name);
-
-
         const imgFlip = document.createElement('p');
         imgFlip.setAttribute('class', 'js-flip flip')
         const alepa = document.createTextNode("Who's That Pokémon?");
@@ -106,32 +103,30 @@ function createCard(cards) {
         carta.appendChild(img);
         cardsContainer.appendChild(carta);
         carta.appendChild(imgFlip);
-        // carta.appendChild(namePokemon);
 
     }
 
-    listenCards(cards);
-
-
+    listenCards();
 
 }
 
 
-function stopBotton(ev) {
+function handler(ev) {
     ev.preventDefault();
+    getServerCards();
 }
-
 
 
 function listenCards() {
     const totalCards = document.querySelectorAll('.js-card');
-
     for (const card of totalCards) {
         card.addEventListener('click', flipCard);
     }
 }
 
 
+
+//////////////DAR LA VUELTA A LAS CARTAS////////////////
 function flipCard(ev) {
 
     ev.currentTarget.classList.add('clickedCard');
@@ -139,9 +134,7 @@ function flipCard(ev) {
 
 }
 
-startButton.addEventListener('click', getServerCards);
-startButton.addEventListener('click', stopBotton);
+startButton.addEventListener('click', handler);
 
 
-// setDefaultInput();
-
+setDefaultInput();
