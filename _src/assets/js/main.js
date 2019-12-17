@@ -13,13 +13,42 @@ const startButton = document.querySelector('.js-btn');
 const url = 'https://beta.adalab.es/ejercicios-extra/api/pokemon-cards/'
 
 
-
-//////////////////////INPUT POR DEFECTO////////////////  
+////////////////////INPUT POR DEFECTO////////////////  
 function setDefaultInput() {
+
     const currentInput = document.querySelector('.input4');
     currentInput.checked = true;
     currentInput.click(); // FALSO CLICK.
 }
+
+
+
+let inputValue = "";
+
+function getLocalStorage() {
+
+    const localStorageInput = localStorage.getItem('Difficulty');
+
+    console.log(localStorageInput);
+    console.log(inputValue);
+    if (localStorageInput !== null) {
+        inputValue = localStorageInput
+
+        for (const input of inputs) {
+
+            if (input.value === inputValue) {
+                input.checked = true
+            }
+        }
+
+    } else {
+        setDefaultInput();
+    }
+    getServerCards();
+
+}
+
+getLocalStorage();
 
 
 
@@ -29,15 +58,22 @@ function getServerCards() {
     cardsContainer.innerHTML = "";
 
     for (const input of inputs) {
-        const inputValue = input.value;
+        inputValue = input.value;
         const clickedInput = input.checked;
 
         if (clickedInput === true) {
+
+            localStorage.setItem('Difficulty', input.value);
+
             fetch(`${url}${inputValue}.json`)
                 .then(response => response.json())
-                .then(data => createCard(data))
+                .then(data => {
+
+                    createCard(data)
+                })
         }
     }
+
 
 };
 
@@ -56,6 +92,10 @@ function createCard(cards) {
         img.setAttribute('src', card.image);
         img.setAttribute('class', 'js-img img');
 
+        // const namePokemon = document.createElement('p');
+        // const name = document.createTextNode(card.name);
+        // namePokemon.appendChild(name);
+
 
         const imgFlip = document.createElement('p');
         imgFlip.setAttribute('class', 'js-flip flip')
@@ -66,14 +106,14 @@ function createCard(cards) {
         carta.appendChild(img);
         cardsContainer.appendChild(carta);
         carta.appendChild(imgFlip);
+        // carta.appendChild(namePokemon);
 
     }
 
     listenCards(cards);
 
 
-    console.log('están saliendo ' + cards.length + ' cartas');
-    console.log(cards);
+
 }
 
 
@@ -89,7 +129,6 @@ function listenCards() {
     for (const card of totalCards) {
         card.addEventListener('click', flipCard);
     }
-    console.log(totalCards);
 }
 
 
@@ -104,5 +143,5 @@ startButton.addEventListener('click', getServerCards);
 startButton.addEventListener('click', stopBotton);
 
 
-setDefaultInput();
+// setDefaultInput();
 
