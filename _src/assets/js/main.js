@@ -137,5 +137,3 @@ function flipCard(ev) {
 
 startButton.addEventListener('click', handler);
 
-
-setDefaultInput();
